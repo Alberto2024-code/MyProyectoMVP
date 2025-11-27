@@ -1,7 +1,5 @@
 package com.example.myproyectomvp.vista
 
-
-
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -35,15 +33,9 @@ class MainActivity : AppCompatActivity(), LoginContrac.View {
         // Presenter
         presenter = LoginPresenter(this)
 
-        // Spinner roles
+        // Spinner roles (ADMIN = 1, TECNICO = 2)
         val tipos = listOf("Administrador", "Técnico")
-
-        val adapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_item,
-            tipos
-        )
-
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, tipos)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spnTipo.adapter = adapter
 
@@ -51,24 +43,16 @@ class MainActivity : AppCompatActivity(), LoginContrac.View {
         btnLogin.setOnClickListener {
             val usuario = edtUsuario.text.toString().trim()
             val contra = edtContra.text.toString().trim()
-            val tipo = when (spnTipo.selectedItem.toString()) {
-                "Administrador" -> 1
-                "Técnico" -> 2
-                else -> 0
-            }
+            val tipoReal = spnTipo.selectedItemPosition + 1   // 1 ó 2 según la BD
 
-
+            // Validaciones
             if (usuario.isEmpty() || contra.isEmpty()) {
                 showError("Por favor completa todos los campos")
                 return@setOnClickListener
             }
 
-            if (tipo == 0) {
-                showError("Selecciona un tipo de usuario")
-                return@setOnClickListener
-            }
-
-            presenter.validarLogin(usuario, contra,tipo)
+            // Llamada correcta al presenter (solo una vez)
+            presenter.validarLogin(usuario, contra, tipoReal)
         }
     }
 
@@ -84,14 +68,14 @@ class MainActivity : AppCompatActivity(), LoginContrac.View {
 
     override fun navigateToMain(tipo: Int) {
         val intent = when (tipo) {
-            // 1 -> Intent(this, MenuAdmActivity::class.java) // lo dejarás para después
-            2 -> Intent(this, MenuTecActivity::class.java)
+            1 -> Intent(this, MenuAdmActivity::class.java)  // Administrador
+            2 -> Intent(this, MenuTecActivity::class.java)    // Técnico
             else -> null
         }
 
         intent?.let {
             startActivity(it)
-            finish() // Evitar volver al login con botón atrás
+            finish()
         } ?: showError("Tipo de usuario desconocido")
     }
 }

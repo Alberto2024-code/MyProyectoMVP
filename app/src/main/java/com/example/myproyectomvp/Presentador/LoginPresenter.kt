@@ -1,7 +1,9 @@
 package com.example.myproyectomvp.Presentador
+
 import com.example.myproyectomvp.Modelo.LoginModelo
 import com.example.myproyectomvp.Contrato.LoginContrac
-class LoginPresenter (
+
+class LoginPresenter(
     private val view: LoginContrac.View,
     private val model: LoginContrac.Modelo = LoginModelo()
 ) : LoginContrac.Presenter {
@@ -15,16 +17,19 @@ class LoginPresenter (
 
         view.showLoading()
 
-        model.loginBD(usuario, contra, tipo) { success ->
+        model.loginBD(usuario, contra, tipo) { response ->
 
             view.hideLoading()
 
-            if (success) {
-                view.navigateToMain(tipo)
+            if (response.status == "success") {
+                // PHP manda el tipo correcto, úsalo
+                val tipoUsuario = response.tipo ?: tipo
+                view.navigateToMain(tipoUsuario)
             } else {
-                view.showError("Usuario o contraseña incorrectos")
+                view.showError(response.mensaje ?: "Usuario o contraseña incorrectos")
             }
         }
     }
 }
+
 

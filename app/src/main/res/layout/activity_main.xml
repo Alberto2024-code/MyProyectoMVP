@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/loginLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:background="#FFFFFF">
+
+    <!-- LOGO -->
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/login"
+        android:layout_marginTop="40dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- TÍTULO PRINCIPAL -->
+    <TextView
+        android:id="@+id/txtTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Iniciar Sesión"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/imgLogo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- TÍTULO USUARIO -->
+    <TextView
+        android:id="@+id/txtTitulousuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Usuario"
+        android:textSize="16sp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/txtTitulo"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- CAMPO USUARIO -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lytUsuario"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Ingresa tu usuario"
+        app:startIconDrawable="@android:drawable/ic_menu_myplaces"
+        android:layout_marginTop="6dp"
+        app:layout_constraintTop_toBottomOf="@id/txtTitulousuario"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- TÍTULO CONTRASEÑA -->
+    <TextView
+        android:id="@+id/txtTituloContra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contraseña"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/lytUsuario"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- CAMPO CONTRASEÑA -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lytContra"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Ingresa tu contraseña"
+        app:startIconDrawable="@android:drawable/ic_lock_idle_lock"
+        app:endIconMode="password_toggle"
+        android:layout_marginTop="6dp"
+        app:layout_constraintTop_toBottomOf="@id/txtTituloContra"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtContra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- TÍTULO TIPO -->
+    <TextView
+        android:id="@+id/txtTituloTipo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tipo de usuario"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/lytContra"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- SPINNER -->
+    <Spinner
+        android:id="@+id/spnTipo"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="6dp"
+
+        app:layout_constraintTop_toBottomOf="@id/txtTituloTipo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- BOTÓN LOGIN -->
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:backgroundTint="#00883E"
+        android:text="Iniciar seccion"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spnTipo" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

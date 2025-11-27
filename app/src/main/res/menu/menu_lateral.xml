@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navMapa"
+        android:title="Mapa de Sitio" />
+    <item
+        android:id="@+id/navOrden"
+        android:title="Orden de Trabajo" />
+    <item
+        android:id="@+id/navRegistros"
+        android:title="Registros" />
+    <item
+        android:id="@+id/navCerrar"
+        android:title="Cerrar Sesión" />
+</menu>

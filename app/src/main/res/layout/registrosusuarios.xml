@@ -49,7 +49,7 @@
                 android:layout_height="60dp"
                 android:layout_marginStart="@android:dimen/app_icon_size"
                 android:padding="4dp"
-                android:src="@drawable/login" />
+                android:src="@drawable/loginn" />
         </LinearLayout>
 
         <!-- Scroll para los campos -->
@@ -65,32 +65,34 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="4dp">
+
 
                 <!-- Nombre -->
                 <TextView
-                    android:text="Nombre"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="Nombre" />
 
                 <EditText
                     android:id="@+id/txtNombre"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Ingresa tu nombre"/>
+                    android:layout_width="350dp"
+                    android:layout_height="50dp"
+                    android:hint="Ingresa tu nombre" />
 
                 <!-- Apellido Paterno -->
                 <TextView
-                    android:text="Apellido Paterno"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="20dp"
+                    android:text="Apellido Paterno" />
 
                 <EditText
                     android:id="@+id/txtPaterno"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Ingresa tu apellido"/>
+                    android:layout_width="350dp"
+                    android:layout_height="50dp"
+                    android:hint="Ingresa tu apellido" />
 
                 <!-- Apellido Materno -->
                 <TextView
@@ -101,24 +103,24 @@
 
                 <EditText
                     android:id="@+id/txtMaterno"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Ingresa tu apellido"/>
+                    android:layout_width="350dp"
+                    android:layout_height="50dp"
+                    android:hint="Ingresa tu apellido" />
 
                 <!-- Matrícula -->
                 <TextView
-                    android:text="Matrícula"
-                    android:layout_width="wrap_content"
+                    android:layout_width="85dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"/>
-
-                <EditText
-                    android:id="@+id/txtMatricula"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Ingresa tu matrícula"/>
+                    android:layout_marginTop="10dp"
+                    android:text="Matrícula" />
 
                 <!-- Contraseña -->
+                <EditText
+                    android:id="@+id/txtMatricula"
+                    android:layout_width="350dp"
+                    android:layout_height="50dp"
+                    android:hint="Ingresa tu matrícula" />
+
                 <TextView
                     android:text="Contraseña"
                     android:layout_width="wrap_content"
@@ -128,9 +130,9 @@
                 <EditText
                     android:id="@+id/txtPassword"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="57dp"
                     android:hint="Ingresa tu contraseña"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword" />
 
                 <!-- Teléfono -->
                 <TextView
@@ -142,20 +144,20 @@
                 <EditText
                     android:id="@+id/txtTelefono"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="55dp"
                     android:hint="Ingresa tu número"
-                    android:inputType="phone"/>
+                    android:inputType="phone" />
 
                 <!-- Tipo de usuario -->
                 <TextView
-                    android:text="Tipo Usuario"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="10dp"
+                    android:text="Tipo Usuario" />
 
                 <Spinner
                     android:id="@+id/spTipoUsuario"
-                    android:layout_width="match_parent"
+                    android:layout_width="350dp"
                     android:layout_height="wrap_content" />
 
                 <!-- Botón Registrar -->

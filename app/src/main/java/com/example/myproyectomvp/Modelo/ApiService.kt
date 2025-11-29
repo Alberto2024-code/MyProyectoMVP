@@ -40,4 +40,8 @@ interface ApiService {
         @POST("menuTecnico.php")
         fun menuTec(): Call<MenuTecUser>
 
+    interface AdminApi
+    @POST("menuAdm.php")
+    fun menuAdm(): Call<MenuAdmResponse>
+
 }

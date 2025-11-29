@@ -53,7 +53,7 @@ class MenuTecActivity : AppCompatActivity(), MenuTecContrato.View {
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.navMapa -> presenter.openMapa()
-                R.id.navOrden -> presenter.openOrden()
+
                 R.id.navRegistros -> {
                     val intent = Intent(this, RegistrosUsuarios::class.java)
                     startActivity(intent)

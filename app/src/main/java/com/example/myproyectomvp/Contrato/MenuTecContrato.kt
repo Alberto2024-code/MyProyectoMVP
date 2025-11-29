@@ -10,7 +10,7 @@ interface MenuTecContrato {
         fun loadUser()
         fun logout()
         fun openMapa()
-        fun openOrden()
+
         fun openRegistros()
     }
 }

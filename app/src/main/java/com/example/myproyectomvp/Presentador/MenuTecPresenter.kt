@@ -43,10 +43,7 @@ class MenuTecPresenter(
         // Abrir Activity/Fragment correspondiente
     }
 
-    override fun openOrden() {
-        view.showMessage("Abriendo Orden de Trabajo")
-        // Abrir Activity/Fragment correspondiente
-    }
+
 
     override fun openRegistros() {
         view.showMessage("Abriendo Registros")

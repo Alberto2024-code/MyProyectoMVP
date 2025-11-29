@@ -78,4 +78,5 @@ class MainActivity : AppCompatActivity(), LoginContrac.View {
             finish()
         } ?: showError("Tipo de usuario desconocido")
     }
+
 }

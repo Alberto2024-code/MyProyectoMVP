@@ -1,4 +1,5 @@
 package com.example.myproyectomvp.Modelo
 
-class MenuTecUser(val nombre: String,
-                  val mensaje: String)
+data class MenuTecUser( val nombre: String? = null,
+                        val mensaje: String? = null,
+                        val error: String? = null )

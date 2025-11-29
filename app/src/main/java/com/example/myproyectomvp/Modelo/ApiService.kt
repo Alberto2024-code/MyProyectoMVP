@@ -15,7 +15,6 @@ import retrofit2.http.POST
 interface ApiService {
 
 
-
     @FormUrlEncoded
     @POST("login.php")
     fun login(
@@ -24,5 +23,21 @@ interface ApiService {
         @Field("tipo") tipo: Int
     ): Call<LoginResponse>
 
+
+    @FormUrlEncoded
+    @POST("registrosUsua.php")
+    fun Registro(
+        @Field("nombre") nombre: String,
+        @Field("apellidoPaterno") apellidoPaterno: String,
+        @Field("apellidoMaterno") apellidoMaterno: String,
+        @Field("matricula") matricula: String,
+        @Field("contrasenia") contrasenia: String,
+        @Field("telefono") telefono: String,
+        @Field("tipoUsuario") tipoUsuario: Int
+    ): Call<RegistroUserResponse>
+
+    interface TecnicoApi
+        @POST("menuTecnico.php")
+        fun menuTec(): Call<MenuTecUser>
 
 }

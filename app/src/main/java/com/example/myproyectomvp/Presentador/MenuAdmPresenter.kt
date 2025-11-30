@@ -50,9 +50,7 @@ class MenuAdmPresenter(
         view.showMessage("Abriendo Mapa de Sitio")
     }
 
-    override fun openOrden() {
-        view.showMessage("Abriendo Orden de Trabajo")
-    }
+
 
     override fun openRegistros() {
         view.showMessage("Abriendo Registros")

@@ -1,6 +1,6 @@
 package com.example.myproyectomvp.Modelo
 
-
+import com.example.myproyectomvp.Contrato.RegistrosUserContrac.View
 import com.example.myproyectomvp.Contrato.RegistrosUserContrac
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,6 +18,15 @@ class RegistroUserModelo : RegistrosUserContrac.Model {
         tipoUsuario: Int,
         callback: (RegistroUserResponse) -> Unit
     ) {
+        if (tipoUsuario != 1) {
+            callback(
+                RegistroUserResponse(
+                    success = false,
+                    message = "Solo el administrador puede registrar usuarios"
+                )
+            )
+            return
+        }
 
         val call = Retrofit.api.Registro(
             nombre.trim(),

@@ -56,9 +56,9 @@ class MenuAdmActivity : AppCompatActivity(), MenuAdminContrac.view {
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.navMapa -> presenter.openMapa()
-                R.id.navOrden -> presenter.openMapa()
+
                 R.id.navRegistros -> {
-                    val intent = Intent(this, RegistrosUsuarios::class.java)
+                    val intent = Intent(this, OpcRegistrosActivity ::class.java)
                     startActivity(intent)
                 }
                 R.id.navCerrar -> presenter.logout()

@@ -54,10 +54,9 @@ class MenuTecActivity : AppCompatActivity(), MenuTecContrato.View {
             when (menuItem.itemId) {
                 R.id.navMapa -> presenter.openMapa()
 
-                R.id.navRegistros -> {
-                    val intent = Intent(this, RegistrosUsuarios::class.java)
-                    startActivity(intent)
-                }
+                R.id.navRegistros -> presenter.openRegistros()
+
+
                 R.id.navCerrar -> presenter.logout()
             }
             drawerLayout.closeDrawer(navView)

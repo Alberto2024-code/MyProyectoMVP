@@ -27,6 +27,7 @@
         <activity android:name=".vista.MenuTecActivity"/>
         <activity android:name=".vista.MenuAdmActivity"/>
         <activity android:name=".vista.RegistrosUsuarios"/>
+        <activity android:name=".vista.OpcRegistrosActivity"/>
     </application>
 
 </manifest>

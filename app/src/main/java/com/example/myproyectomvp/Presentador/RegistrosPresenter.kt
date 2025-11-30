@@ -35,11 +35,12 @@ class RegistrosPresenter(
             tipoUsuario
         ) { response ->
 
-            if (response.message == "success") {
+            if (response.success) {
                 view.usuarioRegistradoExitosamente()
             } else {
                 view.mostrarError(response.message)
             }
+
         }
     }
 }

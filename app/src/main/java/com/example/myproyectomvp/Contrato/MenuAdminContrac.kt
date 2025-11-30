@@ -14,7 +14,7 @@ interface MenuAdminContrac {
         fun loadUser()
         fun logout()
         fun openMapa()
-        fun openOrden()
+
         fun openRegistros()
     }
 }

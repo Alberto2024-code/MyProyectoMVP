@@ -1,6 +1,5 @@
 package com.example.myproyectomvp.Modelo
 
-import com.example.myproyectomvp.Contrato.RegistrosUserContrac.View
 import com.example.myproyectomvp.Contrato.RegistrosUserContrac
 import retrofit2.Call
 import retrofit2.Callback
@@ -15,19 +14,9 @@ class RegistroUserModelo : RegistrosUserContrac.Model {
         matricula: String,
         contrasenia: String,
         telefono: String,
-        tipoUsuario: Int,
+        idRoles: Int,
         callback: (RegistroUserResponse) -> Unit
     ) {
-        if (tipoUsuario != 1) {
-            callback(
-                RegistroUserResponse(
-                    success = false,
-                    message = "Solo el administrador puede registrar usuarios"
-                )
-            )
-            return
-        }
-
         val call = Retrofit.api.Registro(
             nombre.trim(),
             apellidoPaterno.trim(),
@@ -35,27 +24,19 @@ class RegistroUserModelo : RegistrosUserContrac.Model {
             matricula.trim(),
             contrasenia.trim(),
             telefono.trim(),
-            tipoUsuario
+            idRoles
         )
 
         call.enqueue(object : Callback<RegistroUserResponse> {
-
             override fun onResponse(
                 call: Call<RegistroUserResponse>,
                 response: Response<RegistroUserResponse>
             ) {
                 val body = response.body()
-
                 if (!response.isSuccessful || body == null) {
-                    callback(
-                        RegistroUserResponse(
-                            false,
-                            "Error en el servidor"
-                        )
-                    )
+                    callback(RegistroUserResponse(false, "Error en el servidor"))
                     return
                 }
-
                 callback(body)
             }
 
@@ -65,4 +46,5 @@ class RegistroUserModelo : RegistrosUserContrac.Model {
         })
     }
 }
+
 

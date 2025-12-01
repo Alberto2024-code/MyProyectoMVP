@@ -157,13 +157,13 @@
 
                 <Spinner
                     android:id="@+id/spTipoUsuario"
-                    android:layout_width="350dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="355dp"
+                    android:layout_height="50dp" />
 
                 <!-- Botón Registrar -->
                 <Button
                     android:id="@+id/btnRegistrar"
-                    android:layout_width="match_parent"
+                    android:layout_width="352dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:background="#00883E"

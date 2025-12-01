@@ -28,6 +28,10 @@
         <activity android:name=".vista.MenuAdmActivity"/>
         <activity android:name=".vista.RegistrosUsuarios"/>
         <activity android:name=".vista.OpcRegistrosActivity"/>
+        <activity android:name=".vista.ModelosActivity"/>
+        <activity android:name=".View.MarcaActivity"/>
+        <activity android:name=".vista.DispositivosActivity"/>
+        <activity android:name=".vista.RegistrosTecActivity"/>
     </application>
 
 </manifest>

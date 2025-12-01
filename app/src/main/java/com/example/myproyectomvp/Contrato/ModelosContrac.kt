@@ -1,11 +1,11 @@
 package com.example.myproyectomvp.Contrato
 
-import com.example.myproyectomvp.Modelo.ModeloResponse
+import com.example.myproyectomvp.Modelo.Modelo
 
 interface ModelosContrac {
 
     interface View {
-        fun mostrarModelos(modelos: List<com.example.myproyectomvp.Modelo.Modelo>)
+        fun mostrarModelos(modelos: List<Modelo>)
         fun mostrarError(mensaje: String)
     }
 
@@ -14,6 +14,11 @@ interface ModelosContrac {
     }
 
     interface Model {
-        fun fetchModelos(callback: (ModeloResponse?) -> Unit, errorCallback: (String) -> Unit)
+        fun fetchModelos(
+            callback: (List<Modelo>?) -> Unit,
+            errorCallback: (String?) -> Unit
+        )
     }
+
+
 }

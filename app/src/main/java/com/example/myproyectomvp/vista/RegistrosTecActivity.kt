@@ -1,4 +1,5 @@
 package com.example.myproyectomvp.vista
+
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -8,7 +9,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.example.myproyectomvp.R
 import com.example.myproyectomvp.View.MarcaActivity
 import com.google.android.material.navigation.NavigationView
-class OpcRegistrosActivity : AppCompatActivity() {
+
+class RegistrosTecActivity : AppCompatActivity() {
 
     private lateinit var drawer: DrawerLayout
     private lateinit var navView: NavigationView
@@ -34,12 +36,10 @@ class OpcRegistrosActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.btnMarcas).setOnClickListener {
-           startActivity(Intent(this, MarcaActivity::class.java))
+            startActivity(Intent(this, MarcaActivity::class.java))
         }
 
-        findViewById<Button>(R.id.btnUsuarios).setOnClickListener {
-              startActivity(Intent(this, RegistrosUsuarios::class.java))
-        }
+
 
         findViewById<Button>(R.id.btnDispositivos).setOnClickListener {
             startActivity(Intent(this, DispositivosActivity::class.java))

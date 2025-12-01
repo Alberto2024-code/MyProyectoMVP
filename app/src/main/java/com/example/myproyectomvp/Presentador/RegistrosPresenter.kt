@@ -14,12 +14,10 @@ class RegistrosPresenter(
         matricula: String,
         contrasenia: String,
         telefono: String,
-        tipoUsuario: Int
+        idRoles: Int
     ) {
-
-        // Validaciones básicas
         if (nombre.isEmpty() || apellidoPaterno.isEmpty() || apellidoMaterno.isEmpty() ||
-            matricula.isEmpty() || contrasenia.isEmpty() || telefono.isEmpty() || tipoUsuario == 0
+            matricula.isEmpty() || contrasenia.isEmpty() || telefono.isEmpty() || idRoles == 0
         ) {
             view.mostrarError("Todos los campos son obligatorios")
             return
@@ -32,15 +30,14 @@ class RegistrosPresenter(
             matricula,
             contrasenia,
             telefono,
-            tipoUsuario
+            idRoles
         ) { response ->
-
             if (response.success) {
                 view.usuarioRegistradoExitosamente()
             } else {
                 view.mostrarError(response.message)
             }
-
         }
     }
 }
+

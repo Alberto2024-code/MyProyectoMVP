@@ -40,7 +40,7 @@ class RegistrosUsuarios : AppCompatActivity(), RegistrosUserContrac.View {
         btnRegistrar = findViewById(R.id.btnRegistrar)
 
         // Llenar Spinner con opciones (ejemplo)
-        val tipos = arrayOf("Selecciona tipo", "Administrador", "Usuario")
+        val tipos = arrayOf("Selecciona tipo", "Administrador", "Tecnico")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, tipos)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spTipoUsuario.adapter = adapter
@@ -53,8 +53,14 @@ class RegistrosUsuarios : AppCompatActivity(), RegistrosUserContrac.View {
             val matricula = edtMatricula.text.toString()
             val password = edtPassword.text.toString()
             val telefono = edtTelefono.text.toString()
-            val tipoUsuario = spTipoUsuario.selectedItemPosition // 0 = opción por defecto
-
+            val idRoles = when (spTipoUsuario.selectedItemPosition) {
+                1 -> 1 // Administrador
+                2 -> 2 // Usuario
+                else -> 0 }
+             if (idRoles == 0) {
+            mostrarError("Debes seleccionar un tipo de usuario")
+            return@setOnClickListener
+        }
             presenter.registrarUsuario(
                 nombre,
                 paterno,
@@ -62,8 +68,9 @@ class RegistrosUsuarios : AppCompatActivity(), RegistrosUserContrac.View {
                 matricula,
                 password,
                 telefono,
-                tipoUsuario
+                idRoles
             )
+
         }
     }
 

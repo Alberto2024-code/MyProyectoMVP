@@ -5,6 +5,8 @@ import com.example.myproyectomvp.Modelo.UsuarioResponse
 
 interface RegistrosUserContrac {
 
+
+
     interface View {
         fun mostrarMensaje(mensaje: String)
         fun usuarioRegistradoExitosamente()
@@ -19,7 +21,7 @@ interface RegistrosUserContrac {
             matricula: String,
             contrasenia: String,
             telefono: String,
-            tipoUsuario: Int
+            idRoles: Int
         )
     }
 
@@ -31,7 +33,7 @@ interface RegistrosUserContrac {
             matricula: String,
             contrasenia: String,
             telefono: String,
-            tipoUsuario: Int,
+            idRoles: Int,
             callback: (RegistroUserResponse) -> Unit
         )
     }

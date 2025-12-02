@@ -74,8 +74,8 @@
 
                         <EditText
                             android:id="@+id/edtModelo"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_width="336dp"
+                            android:layout_height="56dp"
                             android:hint="Escriba el nombre del modelo"
                             android:inputType="textCapWords"
                             android:padding="10dp" />
@@ -88,16 +88,12 @@
                             android:text="Marca:"
                             android:textSize="16sp" />
 
-                        <EditText
+                        <Spinner
                             android:id="@+id/spnMarca"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:clickable="true"
-                            android:drawableEnd="@android:drawable/arrow_down_float"
-                            android:drawableTint="#000000"
-                            android:focusable="false"
-                            android:hint="Seleccione la marca"
-                            android:padding="10dp" />
+                            android:layout_width="298dp"
+                            android:layout_height="59dp"
+                            android:padding="10dp"
+                            android:spinnerMode="dropdown" />
 
                         <LinearLayout
                             android:layout_width="match_parent"

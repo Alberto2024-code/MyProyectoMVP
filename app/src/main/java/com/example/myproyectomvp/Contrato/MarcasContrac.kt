@@ -20,5 +20,9 @@ interface MarcasContrac {
             callback: (List<Marca>?) -> Unit,
             errorCallback: (String?) -> Unit
         )
+        fun insertarMarca(
+            nombre: String,
+            callback: (Boolean, String) -> Unit
+        )
     }
 }

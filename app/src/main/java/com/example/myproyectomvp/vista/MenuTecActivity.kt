@@ -55,7 +55,7 @@ class MenuTecActivity : AppCompatActivity(), MenuTecContrato.View {
                 R.id.navMapa -> presenter.openMapa()
 
                 R.id.navRegistros ->{
-                    val intent = Intent(this, RegistrosTecActivity ::class.java)
+                    val intent = Intent(this, OpcTecActivity ::class.java)
                     startActivity(intent)
                 }
 
@@ -69,6 +69,8 @@ class MenuTecActivity : AppCompatActivity(), MenuTecContrato.View {
 
     override fun showUser(user: MenuTecUser) {
         txtTitulo.text = "Bienvenido, ${user.nombre}"
+        val txtBienvenida2 = findViewById<TextView>(R.id.txtBienvenida2)
+        txtBienvenida2.text = user.nombre
     }
 
     override fun showMessage(message: String) {

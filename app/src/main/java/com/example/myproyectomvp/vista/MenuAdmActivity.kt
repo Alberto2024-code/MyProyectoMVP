@@ -70,6 +70,8 @@ class MenuAdmActivity : AppCompatActivity(), MenuAdminContrac.view {
 
     override fun showUser(user: MenuAdmResponse) {
         txtTitulo.text = "Bienvenido, ${user.nombre}"
+        val txtBienvenida2 = findViewById<TextView>(R.id.txtBienvenida2)
+        txtBienvenida2.text = user.nombre
     }
 
     override fun showMessage(message: String) {

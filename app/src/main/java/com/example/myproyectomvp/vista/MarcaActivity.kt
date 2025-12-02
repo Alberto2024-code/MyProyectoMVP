@@ -3,11 +3,12 @@ package com.example.myproyectomvp.View
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myproyectomvp.Modelo.*
+import com.example.myproyectomvp.Modelo.Marca
+import com.example.myproyectomvp.Modelo.RegistroMarcaModelo
 import com.example.myproyectomvp.Contrato.MarcasContrac
 import com.example.myproyectomvp.Presentador.MarcaPresenter
-import com.example.myproyectomvp.Modelo.RegistroMarcaModelo
 import com.example.myproyectomvp.R
+import com.example.myproyectomvp.Modelo.Retrofit.api  // Asegúrate del import correcto
 
 class MarcaActivity : AppCompatActivity(), MarcasContrac.View {
 
@@ -20,75 +21,83 @@ class MarcaActivity : AppCompatActivity(), MarcasContrac.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.marcas_activity)
 
+        // ---- Inicializar vistas ----
         edtMarca = findViewById(R.id.edtMarca)
         btnGuardar = findViewById(R.id.btnGuardar)
         tblMarcas = findViewById(R.id.tblMarcas)
 
-        // Inicializamos el Presenter y pasamos el Modelo
-        val model = RegistroMarcaModelo(Retrofit.api) // <-- Model
-        presenter = MarcaPresenter(this, model)            // <-- 'this' es View
+        // ---- Configurar MVP ----
+        val model = RegistroMarcaModelo(api)
+        presenter = MarcaPresenter(this, model)
+
+        // Cargar marcas al iniciar
         presenter.obtenerMarcas()
 
+        // Guardar marca (aún no implementado)
         btnGuardar.setOnClickListener {
             val nombre = edtMarca.text.toString().trim()
-            if (nombre.isNotEmpty()) {
-                presenter.guardarMarca(nombre)
-            } else {
+            if (nombre.isEmpty()) {
                 Toast.makeText(this, "Ingrese una marca", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
+
+            presenter.guardarMarca(nombre)
         }
     }
 
+    // ---------------------------------------------------------
+    //         MÉTODOS DE LA INTERFAZ VIEW - MVP
+    // ---------------------------------------------------------
+
     override fun mostrarMarcas(marcas: List<Marca>) {
-        // Limpiamos las filas existentes excepto la cabecera
-        val headerCount = 1
-        while (tblMarcas.childCount > headerCount) {
-            tblMarcas.removeViewAt(headerCount)
+        // Limpiar filas anteriores, dejando la cabecera
+        while (tblMarcas.childCount > 1) {
+            tblMarcas.removeViewAt(1)
         }
 
-        // Agregamos cada marca
+        // Agregar filas
         marcas.forEach { marca ->
             val row = TableRow(this)
-            row.setPadding(5, 5, 5, 5)
+            row.setPadding(6, 6, 6, 6)
 
-            val idText = TextView(this)
-            idText.text = marca.idMarcas.toString()
-            idText.gravity = android.view.Gravity.CENTER
+            val idText = TextView(this).apply {
+                text = marca.idMarcas.toString()
+                gravity = android.view.Gravity.CENTER
+            }
+
+            val nombreText = TextView(this).apply {
+                text = marca.marcas
+                setPadding(12, 0, 0, 0)
+            }
+
+            // Botones de acciones (editar/eliminar)
+            val accionesLayout = LinearLayout(this).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = android.view.Gravity.CENTER
+                // Aquí puedes agregar botones dinámicamente
+                val btnEditar = Button(this@MarcaActivity).apply {
+                    text = "Editar"
+                }
+                val btnEliminar = Button(this@MarcaActivity).apply {
+                    text = "Eliminar"
+                }
+                addView(btnEditar)
+                addView(btnEliminar)
+            }
+
+            // Agregar vistas a la fila
             row.addView(idText)
-
-            val nombreText = TextView(this)
-            nombreText.text = marca.marcas
-            nombreText.setPadding(10, 0, 0, 0)
             row.addView(nombreText)
-
-            val accionesLayout = LinearLayout(this)
-            accionesLayout.orientation = LinearLayout.HORIZONTAL
-            accionesLayout.gravity = android.view.Gravity.CENTER
-
-            val btnActualizar = TextView(this)
-            btnActualizar.text = "Actualizar"
-            btnActualizar.setTextColor(resources.getColor(R.color.black))
-            btnActualizar.setPadding(0, 0, 10, 0)
-            btnActualizar.setOnClickListener {
-                edtMarca.setText(marca.marcas)
-            }
-
-            val btnEliminar = TextView(this)
-            btnEliminar.text = "Eliminar"
-            btnEliminar.setTextColor(resources.getColor(R.color.black))
-            btnEliminar.setOnClickListener {
-                presenter.eliminarMarca(marca.idMarcas)
-            }
-
-            accionesLayout.addView(btnActualizar)
-            accionesLayout.addView(btnEliminar)
             row.addView(accionesLayout)
 
+            // Agregar la fila a la tabla
             tblMarcas.addView(row)
         }
     }
+
 
     override fun mostrarError(mensaje: String) {
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show()
     }
 }
+

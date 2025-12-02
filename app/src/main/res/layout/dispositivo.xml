@@ -5,8 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
-    tools:context=".">
+    android:background="#FFFFFF"
+    >
 
     <!-- Header -->
     <LinearLayout
@@ -42,9 +42,9 @@
         <ImageView
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src=""
+            android:src="@drawable/login"
             android:background="@android:color/white"
-            android:padding="4dp" />
+            android:padding="8dp" />
     </LinearLayout>
 
     <!-- ScrollView para el formulario -->
@@ -202,6 +202,8 @@
 
         </androidx.cardview.widget.CardView>
 
+
     </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

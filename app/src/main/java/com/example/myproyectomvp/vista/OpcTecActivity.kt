@@ -1,4 +1,5 @@
 package com.example.myproyectomvp.vista
+
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -9,63 +10,57 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.example.myproyectomvp.R
 import com.example.myproyectomvp.View.MarcaActivity
 import com.google.android.material.navigation.NavigationView
-class OpcRegistrosActivity : AppCompatActivity() {
+
+class OpcTecActivity : AppCompatActivity() {
 
     private lateinit var drawer: DrawerLayout
     private lateinit var navView: NavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Desactivar modo oscuro
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.registros)
 
-        // Drawer y NavigationView
+        // Asignar el layout XML
+        setContentView(R.layout.registrostec) // <-- Cambia por tu layout si se llama distinto
+
+        // Inicializar Drawer y NavigationView
         drawer = findViewById(R.id.drawerLayout)
         navView = findViewById(R.id.navView)
 
-        // Toolbar con hamburguesa
+        // Configurar Toolbar con hamburguesa
         val toolbar = findViewById<Toolbar>(R.id.toolbarRegistros)
         setSupportActionBar(toolbar)
         toolbar.setNavigationOnClickListener {
-            drawer.open()
+            drawer.openDrawer(navView)
         }
 
         // BOTONES PRINCIPALES
+        findViewById<Button>(R.id.btnDispositivos).setOnClickListener {
+            startActivity(Intent(this, DispositivosActivity::class.java))
+        }
+
         findViewById<Button>(R.id.btnModelos).setOnClickListener {
             startActivity(Intent(this, ModelosActivity::class.java))
         }
 
         findViewById<Button>(R.id.btnMarcas).setOnClickListener {
-           startActivity(Intent(this, MarcaActivity::class.java))
-        }
-
-        findViewById<Button>(R.id.btnUsuarios).setOnClickListener {
-              startActivity(Intent(this, RegistrosUsuarios::class.java))
-        }
-
-        findViewById<Button>(R.id.btnDispositivos).setOnClickListener {
-            startActivity(Intent(this, DispositivosActivity::class.java))
+            startActivity(Intent(this, MarcaActivity::class.java))
         }
 
         findViewById<Button>(R.id.btnRegresar).setOnClickListener {
             finish() // Cierra esta Activity
         }
 
-
         // MENU LATERAL (Drawer)
         navView.setNavigationItemSelectedListener { item ->
-            when(item.itemId) {
-
-                R.id.navRegistros -> {
-                    // Ya estamos aquí
-                }
-
-                R.id.navCerrar -> {
-                    finish()
-                }
+            when (item.itemId) {
+                R.id.navCerrar -> finish() // Cierra la Activity al seleccionar "Cerrar"
+                // Agrega aquí otros items si los tienes
             }
-            drawer.close()
+            drawer.closeDrawer(navView)
             true
         }
     }
 }
+

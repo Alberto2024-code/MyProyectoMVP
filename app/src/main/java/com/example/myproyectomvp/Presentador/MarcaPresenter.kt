@@ -15,9 +15,15 @@ class MarcaPresenter(
             }
         )
     }
+
     override fun guardarMarca(nombre: String) {
-        // Por ahora vacío o log
-        // view.mostrarError("Función guardarMarca aún no implementada")
+        model.insertarMarca(nombre) { success, message ->
+            if (success) {
+                obtenerMarcas()
+            } else {
+                view.mostrarError(message)
+            }
+        }
     }
 
     override fun eliminarMarca(id: Int) {

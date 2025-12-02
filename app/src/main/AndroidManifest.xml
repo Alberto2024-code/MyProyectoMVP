@@ -32,6 +32,7 @@
         <activity android:name=".View.MarcaActivity"/>
         <activity android:name=".vista.DispositivosActivity"/>
         <activity android:name=".vista.RegistrosTecActivity"/>
+        <activity android:name=".vista.OpcTecActivity"/>
     </application>
 
 </manifest>

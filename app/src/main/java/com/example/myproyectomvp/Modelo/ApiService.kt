@@ -47,11 +47,28 @@ interface ApiService {
     @POST("menuAdm.php")
     fun menuAdm(): Call<MenuAdmResponse>
 
-    @GET("modelos/modelo.php")
+    @GET("Modelos.php")
+
     fun getModelos(): Call<ModeloResponse>
+    @POST("RegistrarModelo.php")
+    @FormUrlEncoded
+    fun registrarModelo(
+        @Field("nombreModelo") nombre: String,
+        @Field("idMarca") idMarca: Int
+    ): Call<DefaulResposnse>
 
 
-    @GET("Marca.php")
+
+    @GET("Marcas.php")
     fun getMarcas(): Call<MarcaResponse>
+
+    @FormUrlEncoded
+    @POST("Marcas.php")
+    fun insertarMarca(
+        @Field("nombreMarca") nombre: String
+    ): Call<DefaultResponse>
+
+
+
 
 }

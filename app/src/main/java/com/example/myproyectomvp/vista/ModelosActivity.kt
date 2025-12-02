@@ -3,6 +3,7 @@ package com.example.myproyectomvp.vista
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
+import android.widget.Spinner
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -14,16 +15,28 @@ import com.example.myproyectomvp.Presentador.ModeloPresenter
 import com.example.myproyectomvp.Modelo.RegistroUserModelo
 import com.example.myproyectomvp.Contrato.ModelosContrac.Model
 import com.example.myproyectomvp.Modelo.ApiService
+import retrofit2.Callback
+import retrofit2.Call
+import retrofit2.Response
+import android.widget.ArrayAdapter
+import com.example.myproyectomvp.Modelo.DefaulResposnse
+import com.example.myproyectomvp.Modelo.DefaultResponse
+import com.example.myproyectomvp.Modelo.MarcaResponse
 import com.example.myproyectomvp.Modelo.RegistroModelo
 import com.example.myproyectomvp.Modelo.Retrofit
 import com.example.myproyectomvp.R
-
+import java.security.Guard
 
 
 class ModelosActivity : AppCompatActivity(), ModelosContrac.View {
 
     private lateinit var presenter: ModelosContrac.Presenter
     private lateinit var tableLayout: TableLayout
+    private lateinit var spinnerMarcas: Spinner
+
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +46,7 @@ class ModelosActivity : AppCompatActivity(), ModelosContrac.View {
         tableLayout = findViewById(R.id.tblModelos)
 
         val registroModelo = RegistroModelo(Retrofit.api)
+        spinnerMarcas = findViewById(R.id.spnMarca)
 
 // Crear el Presenter
         presenter = ModeloPresenter(this, registroModelo)
@@ -40,25 +54,32 @@ class ModelosActivity : AppCompatActivity(), ModelosContrac.View {
 
         // Cargar modelos al iniciar
         presenter.obtenerModelos()
+
+        cargarSpinnerMarcas()
     }
 
-    // ==============================
-    //  MÉTODO DEL MVP: MOSTRAR DATOS
-    // ==============================
+
     override fun mostrarModelos(modelos: List<Modelo>) {
         cargarTabla(modelos)
+        // Llenar Spinner con nombres de marcas
+        val nombresMarcas = modelos.map { it.nombreMarca }.distinct() // evita duplicados
+
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            nombresMarcas
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        spinnerMarcas.adapter = adapter
     }
 
-    // ==============================
-    //  MÉTODO DEL MVP: MOSTRAR ERROR
-    // ==============================
+
     override fun mostrarError(mensaje: String) {
         Toast.makeText(this, mensaje, Toast.LENGTH_LONG).show()
     }
 
-    // ==========================================
-    // FUNCIÓN QUE ARMA LA TABLA DINÁMICAMENTE
-    // ==========================================
+
     private fun cargarTabla(modelos: List<Modelo>) {
         // Limpiar filas anteriores (dejando encabezado)
         if (tableLayout.childCount > 1) {
@@ -99,5 +120,60 @@ class ModelosActivity : AppCompatActivity(), ModelosContrac.View {
             tableLayout.addView(fila)
         }
     }
+    private fun cargarSpinnerMarcas() {
+        val api = Retrofit.api
+        api.getMarcas().enqueue(object : Callback<MarcaResponse> {
+            override fun onResponse(call: Call<MarcaResponse>, response: Response<MarcaResponse>) {
+                if (response.isSuccessful && response.body()?.success == true) {
+                    val marcasList = response.body()?.marcas ?: emptyList() // ✅ lista real
+
+                    // Ahora sí puedes usar map
+                    val nombresMarcas =
+                        marcasList.map { it.marcas } // ✅ 'it' funciona porque marcasList es List<Marca>
+
+                    val adapter = ArrayAdapter(
+                        this@ModelosActivity,
+                        android.R.layout.simple_spinner_item,
+                        nombresMarcas
+                    )
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    spinnerMarcas.adapter = adapter
+                }
+            }
+
+            override fun onFailure(call: Call<MarcaResponse>, t: Throwable) {
+                Toast.makeText(this@ModelosActivity, "Error: ${t.message}", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        })
+    }
+    private fun guardarModelo(nombreModelo: String, idMarca: Int) {
+        val api = Retrofit.api
+
+        api.registrarModelo(nombreModelo, idMarca).enqueue(object : Callback<DefaulResposnse> {
+            override fun onResponse(call: Call<DefaulResposnse>, response: Response<DefaulResposnse>) {
+                if (response.isSuccessful && response.body()?.success == true) {
+                    Toast.makeText(
+                        this@ModelosActivity,
+                        response.body()?.message ?: "Modelo guardado",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    // Refrescar tabla
+                    presenter.obtenerModelos()
+                } else {
+                    Toast.makeText(
+                        this@ModelosActivity,
+                        response.body()?.message ?: "Error desconocido",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            override fun onFailure(call: Call<DefaulResposnse>, t: Throwable) {
+                Toast.makeText(this@ModelosActivity, "Error de conexión: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
 }
 

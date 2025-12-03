@@ -68,6 +68,17 @@ interface ApiService {
         @Field("nombreMarca") nombre: String
     ): Call<DefaultResponse>
 
+    @GET("getDispositivos.php")
+    fun getDispositivos(): Call<DispositivoResponse>
+    @FormUrlEncoded
+    @POST("registrarDispositivo.php")
+    fun registrarDispositivo(
+        @Field("nombreDispositivo") nombreDispositivo: String,
+        @Field("idTipoDispositivo") idTipoDispositivo: Int,
+        @Field("idModelo") idModelo: Int,
+        @Field("idLaboratorio") idLaboratorio: Int,
+        @Field("numeroInventario") numeroInventario: String
+    ): Call<RegistroRes>
 
 
 

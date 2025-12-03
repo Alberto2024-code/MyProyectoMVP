@@ -146,11 +146,16 @@
                     android:layout_marginBottom="4dp" />
 
                 <Spinner
-                    android:id="@+id/spinnerModelo"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:background="@android:drawable/editbox_background"
-                    android:layout_marginBottom="16dp" />
+                    android:id="@+id/spnTipo"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    app:layout_constraintTop_toBottomOf="@id/txtTituloTipo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
 
                 <!-- Laboratorio -->
                 <TextView

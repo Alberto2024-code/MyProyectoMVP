@@ -30,7 +30,7 @@
         <activity android:name=".vista.OpcRegistrosActivity"/>
         <activity android:name=".vista.ModelosActivity"/>
         <activity android:name=".View.MarcaActivity"/>
-        <activity android:name=".vista.DispositivosActivity"/>
+        <activity android:name=".vista.DispositivoActivity"/>
         <activity android:name=".vista.RegistrosTecActivity"/>
         <activity android:name=".vista.OpcTecActivity"/>
     </application>

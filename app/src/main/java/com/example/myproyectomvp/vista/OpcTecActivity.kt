@@ -37,7 +37,7 @@ class OpcTecActivity : AppCompatActivity() {
 
         // BOTONES PRINCIPALES
         findViewById<Button>(R.id.btnDispositivos).setOnClickListener {
-            startActivity(Intent(this, DispositivosActivity::class.java))
+            startActivity(Intent(this, DispositivoActivity::class.java))
         }
 
         findViewById<Button>(R.id.btnModelos).setOnClickListener {

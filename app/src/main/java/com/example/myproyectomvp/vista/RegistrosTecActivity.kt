@@ -42,7 +42,7 @@ class RegistrosTecActivity : AppCompatActivity() {
 
 
         findViewById<Button>(R.id.btnDispositivos).setOnClickListener {
-            startActivity(Intent(this, DispositivosActivity::class.java))
+            startActivity(Intent(this, DispositivoActivity::class.java))
         }
 
         findViewById<Button>(R.id.btnRegresar).setOnClickListener {

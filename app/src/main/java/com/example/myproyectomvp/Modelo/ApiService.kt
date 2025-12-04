@@ -48,13 +48,19 @@ interface ApiService {
     fun menuAdm(): Call<MenuAdmResponse>
 
     @GET("Modelos.php")
-
     fun getModelos(): Call<ModeloResponse>
-    @POST("RegistrarModelo.php")
+    @POST("Modelos.php")
     @FormUrlEncoded
     fun registrarModelo(
         @Field("nombreModelo") nombre: String,
         @Field("idMarca") idMarca: Int
+    ): Call<DefaulResposnse>
+
+    @POST("Modelos.php")
+    @FormUrlEncoded
+    fun eliminarModelo(
+        @Field("idModelo") id: Int,
+        @Field("accion") accion: String = "eliminar"
     ): Call<DefaulResposnse>
 
 
@@ -68,18 +74,29 @@ interface ApiService {
         @Field("nombreMarca") nombre: String
     ): Call<DefaultResponse>
 
+    @FormUrlEncoded
+    @POST("Marcas.php")
+    fun eliminarMarca(
+        @Field("idMarca") id: Int,
+        @Field("accion") accion: String = "eliminar"
+    ): Call<DefaultResponse>
+
+
     @GET("getDispositivos.php")
     fun getDispositivos(): Call<DispositivoResponse>
     @FormUrlEncoded
-    @POST("registrarDispositivo.php")
+    @POST("registrodipositivos.php")
     fun registrarDispositivo(
         @Field("nombreDispositivo") nombreDispositivo: String,
         @Field("idTipoDispositivo") idTipoDispositivo: Int,
         @Field("idModelo") idModelo: Int,
         @Field("idLaboratorio") idLaboratorio: Int,
         @Field("numeroInventario") numeroInventario: String
-    ): Call<RegistroRes>
-
+    ): Call<DispositivoRes>
+    @GET("getLaboratorios.php")
+    fun getLaboratorios(): Call<LaboratorioResponse>
+    @GET("getTipos.php")
+    fun getTipos(): Call<TipoResponse>
 
 
 }

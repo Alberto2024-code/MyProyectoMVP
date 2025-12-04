@@ -28,7 +28,11 @@ class RegistrosUsuarios : AppCompatActivity(), RegistrosUserContrac.View {
 
         // Inicializar Presenter
         presenter = RegistrosPresenter(this, RegistroUserModelo())
+        val btnRegresar = findViewById<ImageButton>(R.id.btnRegresar)
 
+        btnRegresar.setOnClickListener {
+            finish()   // Regresa a la Activity anterior
+        }
         // Obtener vistas
         edtNombre = findViewById(R.id.txtNombre)
         edtPaterno = findViewById(R.id.txtPaterno)

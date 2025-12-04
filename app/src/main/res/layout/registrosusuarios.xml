@@ -26,13 +26,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <!-- Botón menú hamburguesa -->
-            <ImageView
-                android:id="@+id/btnMenu"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_menu"
-                android:padding="4dp" />
+            <ImageButton
+                android:id="@+id/btnRegresar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="start|center_vertical"
+                android:background="@android:color/transparent"
+                android:contentDescription="Regresar"
+                android:padding="10dp"
+                android:src="@drawable/regresar"
+                app:tint="@android:color/white"/>
+
 
             <!-- Título -->
             <TextView
@@ -166,7 +170,7 @@
                     android:layout_width="352dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:background="#00883E"
+                    android:backgroundTint="#00883E"
                     android:text="Registrar Usuario"
                     android:textColor="@android:color/white" />
             </LinearLayout>
@@ -174,12 +178,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Menú lateral (Drawer) -->
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navView"
-        android:layout_width="250dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/menu_lateral" />
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

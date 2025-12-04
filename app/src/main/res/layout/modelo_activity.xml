@@ -17,18 +17,40 @@
             android:id="@+id/toolbarModelos"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#1BA537"
-            app:title="Registrar Modelo"
-            app:titleTextColor="@android:color/white">
+            android:background="#00883E">
 
+            <ImageButton
+                android:id="@+id/btnRegresar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="start|center_vertical"
+                android:background="@android:color/transparent"
+                android:contentDescription="Regresar"
+                android:padding="10dp"
+                android:src="@drawable/regresar"
+                app:tint="@android:color/white"/>
+
+            <!-- Título centrado -->
+            <TextView
+                android:id="@+id/txtTitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Registrar Modelo"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <!-- Logo al final -->
             <ImageView
                 android:id="@+id/btnlogo"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_gravity="end"
+                android:layout_gravity="end|center_vertical"
                 android:layout_marginEnd="16dp"
                 android:contentDescription="Logo"
-                android:src="@drawable/login" />
+                android:src="@drawable/login"/>
+
         </androidx.appcompat.widget.Toolbar>
 
         <ScrollView
@@ -108,14 +130,14 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="20dp"
                                 android:text="Guardar"
-                                android:backgroundTint="#1BA537" />
+                                android:backgroundTint="#00883E" />
 
                             <Button
                                 android:id="@+id/btnCancelar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Cancelar"
-                                android:backgroundTint="#757575" />
+                                android:backgroundTint="#333" />
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

@@ -19,8 +19,13 @@ import retrofit2.Callback
 import retrofit2.Call
 import retrofit2.Response
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.LinearLayout
 import com.example.myproyectomvp.Modelo.DefaulResposnse
 import com.example.myproyectomvp.Modelo.DefaultResponse
+import com.example.myproyectomvp.Modelo.Marca
 import com.example.myproyectomvp.Modelo.MarcaResponse
 import com.example.myproyectomvp.Modelo.RegistroModelo
 import com.example.myproyectomvp.Modelo.Retrofit
@@ -33,55 +38,66 @@ class ModelosActivity : AppCompatActivity(), ModelosContrac.View {
     private lateinit var presenter: ModelosContrac.Presenter
     private lateinit var tableLayout: TableLayout
     private lateinit var spinnerMarcas: Spinner
-
-
-
-
+    private lateinit var edtNombreModelo: EditText
+    private lateinit var marcasMap: Map<String, Int>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.modelo_activity) // Tu XML real
+        setContentView(R.layout.modelo_activity)
 
-        // TableLayout donde se mostrarán los modelos
+        // ---- Inicializar vistas ----
         tableLayout = findViewById(R.id.tblModelos)
-
-        val registroModelo = RegistroModelo(Retrofit.api)
         spinnerMarcas = findViewById(R.id.spnMarca)
+        edtNombreModelo = findViewById(R.id.edtModelo)
+        val btnRegresar = findViewById<ImageButton>(R.id.btnRegresar)
+        val btnGuardar = findViewById<Button>(R.id.btnGuardar)
 
-// Crear el Presenter
+        btnRegresar.setOnClickListener { finish() }
+
+        // ---- Configurar MVP ----
+        val registroModelo = RegistroModelo(Retrofit.api)
         presenter = ModeloPresenter(this, registroModelo)
-
 
         // Cargar modelos al iniciar
         presenter.obtenerModelos()
 
+        // Cargar spinner de marcas
         cargarSpinnerMarcas()
+
+        // Guardar modelo
+        btnGuardar.setOnClickListener {
+            val nombre = edtNombreModelo.text.toString().trim()
+            val marcaSeleccionada = spinnerMarcas.selectedItem?.toString() ?: ""
+            val idMarca = marcasMap[marcaSeleccionada] ?: 0
+
+            if (nombre.isEmpty() || idMarca == 0) {
+                Toast.makeText(this, "Faltan datos", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            presenter.guardarModelo(nombre, idMarca)
+        }
     }
 
-
+    // -----------------------------
+    // Interfaz View - MVP
+    // -----------------------------
     override fun mostrarModelos(modelos: List<Modelo>) {
         cargarTabla(modelos)
-        // Llenar Spinner con nombres de marcas
-        val nombresMarcas = modelos.map { it.nombreMarca }.distinct() // evita duplicados
-
-        val adapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_item,
-            nombresMarcas
-        )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        spinnerMarcas.adapter = adapter
     }
-
 
     override fun mostrarError(mensaje: String) {
         Toast.makeText(this, mensaje, Toast.LENGTH_LONG).show()
     }
 
+    override fun mostrarMensaje(mensaje: String) {
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show()
+    }
 
+    // -----------------------------
+    // Tabla dinámica de modelos
+    // -----------------------------
     private fun cargarTabla(modelos: List<Modelo>) {
-        // Limpiar filas anteriores (dejando encabezado)
         if (tableLayout.childCount > 1) {
             tableLayout.removeViews(1, tableLayout.childCount - 1)
         }
@@ -91,45 +107,53 @@ class ModelosActivity : AppCompatActivity(), ModelosContrac.View {
             fila.setPadding(8, 8, 8, 8)
             fila.setBackgroundColor(Color.WHITE)
 
-            // ID
-            val tvId = TextView(this)
-            tvId.text = modelo.idModelo.toString()
-            tvId.setPadding(10, 10, 10, 10)
-            tvId.gravity = Gravity.CENTER
+            val tvId = TextView(this).apply {
+                text = modelo.idModelo.toString()
+                setPadding(10, 10, 10, 10)
+                gravity = Gravity.CENTER
+            }
 
-            // Modelo
-            val tvModelo = TextView(this)
-            tvModelo.text = modelo.nombreModelo
-            tvModelo.setPadding(10, 10, 10, 10)
+            val tvModelo = TextView(this).apply {
+                text = modelo.nombreModelo
+                setPadding(10, 10, 10, 10)
+            }
 
-            // Marca
-            val tvMarca = TextView(this)
-            tvMarca.text = modelo.nombreMarca
-            tvMarca.setPadding(10, 10, 10, 10)
+            val tvMarca = TextView(this).apply {
+                text = modelo.nombreMarca
+                setPadding(10, 10, 10, 10)
+            }
 
-            // Agregar vistas a la fila
+            val accionesLayout = LinearLayout(this).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = Gravity.CENTER
+            }
+
+            val btnEliminar = Button(this).apply { text = "Eliminar" }
+            btnEliminar.setOnClickListener {
+                presenter.eliminarModelo(modelo.idModelo)
+            }
+
+            accionesLayout.addView(btnEliminar)
+
             fila.addView(tvId)
             fila.addView(tvModelo)
             fila.addView(tvMarca)
-
-            // Aquí puedes agregar botones o acciones dinámicas si quieres
-            val accionesLayout = TableRow(this)
             fila.addView(accionesLayout)
 
-            // Agregar fila a la tabla
             tableLayout.addView(fila)
         }
     }
+
+    // -----------------------------
+    // Cargar Spinner de marcas desde API
+    // -----------------------------
     private fun cargarSpinnerMarcas() {
-        val api = Retrofit.api
-        api.getMarcas().enqueue(object : Callback<MarcaResponse> {
+        Retrofit.api.getMarcas().enqueue(object : Callback<MarcaResponse> {
             override fun onResponse(call: Call<MarcaResponse>, response: Response<MarcaResponse>) {
                 if (response.isSuccessful && response.body()?.success == true) {
-                    val marcasList = response.body()?.marcas ?: emptyList() // ✅ lista real
-
-                    // Ahora sí puedes usar map
-                    val nombresMarcas =
-                        marcasList.map { it.marcas } // ✅ 'it' funciona porque marcasList es List<Marca>
+                    val marcasList = response.body()?.marcas ?: emptyList()
+                    val nombresMarcas = marcasList.map { it.marcas }
+                    marcasMap = marcasList.associate { it.marcas to it.idMarcas }
 
                     val adapter = ArrayAdapter(
                         this@ModelosActivity,
@@ -142,38 +166,9 @@ class ModelosActivity : AppCompatActivity(), ModelosContrac.View {
             }
 
             override fun onFailure(call: Call<MarcaResponse>, t: Throwable) {
-                Toast.makeText(this@ModelosActivity, "Error: ${t.message}", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        })
-    }
-    private fun guardarModelo(nombreModelo: String, idMarca: Int) {
-        val api = Retrofit.api
-
-        api.registrarModelo(nombreModelo, idMarca).enqueue(object : Callback<DefaulResposnse> {
-            override fun onResponse(call: Call<DefaulResposnse>, response: Response<DefaulResposnse>) {
-                if (response.isSuccessful && response.body()?.success == true) {
-                    Toast.makeText(
-                        this@ModelosActivity,
-                        response.body()?.message ?: "Modelo guardado",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    // Refrescar tabla
-                    presenter.obtenerModelos()
-                } else {
-                    Toast.makeText(
-                        this@ModelosActivity,
-                        response.body()?.message ?: "Error desconocido",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-
-            override fun onFailure(call: Call<DefaulResposnse>, t: Throwable) {
-                Toast.makeText(this@ModelosActivity, "Error de conexión: ${t.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ModelosActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
 
 }
-

@@ -1,29 +1,30 @@
 package com.example.myproyectomvp.Modelo
 import com.example.myproyectomvp.Contrato.DispositivosContrac
+import com.example.myproyectomvp.Modelo.DefaultResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-class DispositivoModelo (private val api: ApiService) : DispositivosContrac.Model {
+class DispositivoModelo(private val api: ApiService) : DispositivosContrac.Model {
 
-    // Obtener lista de dispositivos
+
     override fun obtenerDispositivos(callback: (success: Boolean, lista: List<Dispositivo>?, mensaje: String?) -> Unit) {
         api.getDispositivos().enqueue(object : Callback<DispositivoResponse> {
             override fun onResponse(call: Call<DispositivoResponse>, response: Response<DispositivoResponse>) {
-                val body = response.body()
-                if (body != null && body.success) {
-                    callback(true, body.dispositivos, null)
+                if (response.isSuccessful && response.body() != null) {
+                    val body = response.body()!!
+                    callback(body.success, body.dispositivos, body.message)
                 } else {
-                    callback(false, null, body?.message ?: "Error desconocido")
+                    callback(false, null, "Error al obtener dispositivos")
                 }
             }
 
             override fun onFailure(call: Call<DispositivoResponse>, t: Throwable) {
-                callback(false, null, t.localizedMessage ?: "Error de conexión")
+                callback(false, null, t.message ?: "Error de conexión")
             }
         })
     }
 
-    // Registrar un dispositivo
+    // Registrar un nuevo dispositivo
     override fun registrarDispositivo(
         nombre: String,
         idTipoDispositivo: Int,
@@ -32,17 +33,25 @@ class DispositivoModelo (private val api: ApiService) : DispositivosContrac.Mode
         numeroInventario: String,
         callback: (success: Boolean, mensaje: String) -> Unit
     ) {
-        api.registrarDispositivo(nombre, idTipoDispositivo, idModelo, idLaboratorio, numeroInventario)
-            .enqueue(object : Callback<RegistroRes> {
-                override fun onResponse(call: Call<RegistroRes>, response: Response<RegistroRes>) {
-                    val body = response.body()
-                    if (body != null) callback(body.success, body.message)
-                    else callback(false, "Error desconocido")
+        api.registrarDispositivo(
+            nombre,
+            idTipoDispositivo,
+            idModelo,
+            idLaboratorio,
+            numeroInventario
+        ).enqueue(object : Callback<DispositivoRes> {
+            override fun onResponse(call: Call<DispositivoRes>, response: Response<DispositivoRes>) {
+                if (response.isSuccessful && response.body() != null) {
+                    val body = response.body()!!
+                    callback(body.success, body.message)
+                } else {
+                    callback(false, "Error al registrar dispositivo")
                 }
+            }
 
-                override fun onFailure(call: Call<RegistroRes>, t: Throwable) {
-                    callback(false, t.localizedMessage ?: "Error de conexión")
-                }
-            })
+            override fun onFailure(call: Call<DispositivoRes>, t: Throwable) {
+                callback(false, t.message ?: "Error de conexión")
+            }
+        })
     }
 }

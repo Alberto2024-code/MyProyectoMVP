@@ -24,5 +24,6 @@ interface MarcasContrac {
             nombre: String,
             callback: (Boolean, String) -> Unit
         )
+        fun eliminarMarca(id: Int, callback: (Boolean, String) -> Unit)
     }
 }

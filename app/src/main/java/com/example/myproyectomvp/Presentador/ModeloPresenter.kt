@@ -18,4 +18,26 @@ class ModeloPresenter (
         )
 
     }
+   override fun guardarModelo(nombre: String, idMarca: Int) {
+        model.guardarModelo(nombre, idMarca) { success, mensaje ->
+            if (success) {
+                view.mostrarError(mensaje) // o podrías hacer un método nuevo en View como mostrarMensaje
+                obtenerModelos() // Refrescar tabla
+            } else {
+                view.mostrarError(mensaje)
+            }
+        }
+    }
+
+
+    override fun eliminarModelo(id: Int) {
+        model.eliminarModelo(id) { success, mensaje ->
+            if (success) {
+                view.mostrarMensaje(mensaje) // o mostrarMensaje
+                obtenerModelos() // Refrescar tabla
+            } else {
+                view.mostrarError(mensaje)
+            }
+        }
+    }
 }

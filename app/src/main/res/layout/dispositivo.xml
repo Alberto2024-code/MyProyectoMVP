@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    >
+    android:background="#FFFFFF">
 
     <!-- Header -->
     <LinearLayout
@@ -22,12 +22,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@android:drawable/ic_menu_sort_by_size"
-            android:tint="@android:color/white"
-            tools:ignore="UseAppTint" />
+        <ImageButton
+            android:id="@+id/btnRegresar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="10dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/regresar"
+            android:contentDescription="Regresar"
+            app:tint="@android:color/white" />
 
         <TextView
             android:layout_width="0dp"
@@ -44,7 +47,7 @@
             android:layout_height="32dp"
             android:src="@drawable/login"
             android:background="@android:color/white"
-            android:padding="8dp" />
+            android:padding="0dp" />
     </LinearLayout>
 
     <!-- ScrollView para el formulario -->
@@ -63,6 +66,7 @@
             android:layout_margin="16dp"
             app:cardCornerRadius="8dp"
             app:cardElevation="4dp">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -131,10 +135,11 @@
 
                 <Spinner
                     android:id="@+id/spinnerTipoDispositivo"
+
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:background="@android:drawable/editbox_background"
-                    android:layout_marginBottom="16dp" />
+                    android:layout_marginBottom="16dp"
+                    android:spinnerMode="dropdown"  />
 
                 <!-- Modelo -->
                 <TextView
@@ -147,15 +152,11 @@
 
                 <Spinner
                     android:id="@+id/spnTipo"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    app:layout_constraintTop_toBottomOf="@id/txtTituloTipo"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
 
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="16dp"
+                    android:spinnerMode="dropdown"  />
 
                 <!-- Laboratorio -->
                 <TextView
@@ -168,10 +169,11 @@
 
                 <Spinner
                     android:id="@+id/spinnerLaboratorio"
+
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:background="@android:drawable/editbox_background"
-                    android:layout_marginBottom="24dp" />
+                    android:layout_marginBottom="16dp"
+                    android:spinnerMode="dropdown"  />
 
                 <!-- Botones -->
                 <LinearLayout
@@ -198,7 +200,7 @@
                         android:layout_weight="1"
                         android:text="Cancelar"
                         android:textColor="@android:color/white"
-                        android:backgroundTint="#00883E"
+                        android:backgroundTint="#333"
                         android:layout_marginStart="8dp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -207,8 +209,6 @@
 
         </androidx.cardview.widget.CardView>
 
-
     </ScrollView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

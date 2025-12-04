@@ -61,6 +61,7 @@ class MenuAdmActivity : AppCompatActivity(), MenuAdminContrac.view {
                     val intent = Intent(this, OpcRegistrosActivity ::class.java)
                     startActivity(intent)
                 }
+
                 R.id.navCerrar -> presenter.logout()
             }
             drawerLayout.closeDrawer(navView)

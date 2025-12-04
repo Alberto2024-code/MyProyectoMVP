@@ -1,6 +1,7 @@
 package com.example.myproyectomvp.View
 
 import android.os.Bundle
+import android.view.Gravity
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myproyectomvp.Modelo.Marca
@@ -8,7 +9,7 @@ import com.example.myproyectomvp.Modelo.RegistroMarcaModelo
 import com.example.myproyectomvp.Contrato.MarcasContrac
 import com.example.myproyectomvp.Presentador.MarcaPresenter
 import com.example.myproyectomvp.R
-import com.example.myproyectomvp.Modelo.Retrofit.api  // Asegúrate del import correcto
+import com.example.myproyectomvp.Modelo.Retrofit.api // Asegúrate del import correcto
 
 class MarcaActivity : AppCompatActivity(), MarcasContrac.View {
 
@@ -16,6 +17,8 @@ class MarcaActivity : AppCompatActivity(), MarcasContrac.View {
     private lateinit var btnGuardar: Button
     private lateinit var tblMarcas: TableLayout
     private lateinit var presenter: MarcasContrac.Presenter
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +32,11 @@ class MarcaActivity : AppCompatActivity(), MarcasContrac.View {
         // ---- Configurar MVP ----
         val model = RegistroMarcaModelo(api)
         presenter = MarcaPresenter(this, model)
+        val btnRegresar = findViewById<ImageButton>(R.id.btnRegresar)
 
+        btnRegresar.setOnClickListener {
+            finish()   // Regresa a la Activity anterior
+        }
         // Cargar marcas al iniciar
         presenter.obtenerMarcas()
 
@@ -50,7 +57,7 @@ class MarcaActivity : AppCompatActivity(), MarcasContrac.View {
     // ---------------------------------------------------------
 
     override fun mostrarMarcas(marcas: List<Marca>) {
-        // Limpiar filas anteriores, dejando la cabecera
+        // Limpiar filas anteriores, dejando cabecera
         while (tblMarcas.childCount > 1) {
             tblMarcas.removeViewAt(1)
         }
@@ -62,7 +69,7 @@ class MarcaActivity : AppCompatActivity(), MarcasContrac.View {
 
             val idText = TextView(this).apply {
                 text = marca.idMarcas.toString()
-                gravity = android.view.Gravity.CENTER
+                gravity = Gravity.CENTER
             }
 
             val nombreText = TextView(this).apply {
@@ -70,27 +77,34 @@ class MarcaActivity : AppCompatActivity(), MarcasContrac.View {
                 setPadding(12, 0, 0, 0)
             }
 
-            // Botones de acciones (editar/eliminar)
+            // Botones de acciones (Editar / Eliminar)
             val accionesLayout = LinearLayout(this).apply {
                 orientation = LinearLayout.HORIZONTAL
-                gravity = android.view.Gravity.CENTER
-                // Aquí puedes agregar botones dinámicamente
-                val btnEditar = Button(this@MarcaActivity).apply {
-                    text = "Editar"
-                }
-                val btnEliminar = Button(this@MarcaActivity).apply {
-                    text = "Eliminar"
-                }
-                addView(btnEditar)
-                addView(btnEliminar)
+                gravity = Gravity.CENTER
             }
+
+
+
+            val btnEliminar = Button(this@MarcaActivity).apply {
+                text = "Eliminar"
+            }
+
+            // Funcionalidad del botón Eliminar
+            btnEliminar.setOnClickListener {
+                val idMarca = marca.idMarcas
+                presenter.eliminarMarca(idMarca)
+                tblMarcas.removeView(row)
+            }
+
+
+            accionesLayout.addView(btnEliminar)
 
             // Agregar vistas a la fila
             row.addView(idText)
             row.addView(nombreText)
             row.addView(accionesLayout)
 
-            // Agregar la fila a la tabla
+            // Agregar fila a la tabla
             tblMarcas.addView(row)
         }
     }

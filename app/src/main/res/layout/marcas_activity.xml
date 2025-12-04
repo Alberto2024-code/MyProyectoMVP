@@ -21,12 +21,17 @@
             android:gravity="center_vertical"
             android:paddingHorizontal="15dp">
 
-            <ImageView
-                android:id="@+id/btnMenu"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentStart="true"
-                android:src="@android:drawable/ic_menu_sort_by_size"
+            <!-- Tu vector -->
+
+
+            <ImageButton
+                android:id="@+id/btnRegresar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="10dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/regresar"
+                android:contentDescription="Regresar"
                 app:tint="@android:color/white" />
 
             <TextView
@@ -103,12 +108,14 @@
                             android:id="@+id/btnGuardar"
                             android:text="Guardar"
                             android:layout_marginEnd="20dp"
+                            android:backgroundTint="#00883E"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
                         <Button
                             android:id="@+id/btnCancelar"
                             android:text="Cancelar"
+                            android:backgroundTint="#333"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
@@ -166,12 +173,6 @@
     </LinearLayout>
 
     <!-- MENÚ LATERAL -->
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/menu_lateral"
-        android:background="@android:color/white"/>
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

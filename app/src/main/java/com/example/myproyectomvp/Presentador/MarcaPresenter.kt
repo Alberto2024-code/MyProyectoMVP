@@ -1,5 +1,7 @@
 package com.example.myproyectomvp.Presentador
 import com.example.myproyectomvp.Contrato.MarcasContrac
+import com.example.myproyectomvp.Modelo.DefaultResponse
+import com.example.myproyectomvp.Modelo.Retrofit.api
 class MarcaPresenter(
     private val view: MarcasContrac.View,
     private val model: MarcasContrac.Model
@@ -27,7 +29,11 @@ class MarcaPresenter(
     }
 
     override fun eliminarMarca(id: Int) {
-        // Por ahora vacío o log
-        // view.mostrarError("Función eliminarMarca aún no implementada")
+        model.eliminarMarca(id) { success, mensaje ->
+            if (success) obtenerMarcas()
+            view.mostrarError(mensaje)
+        }
     }
+
 }
+

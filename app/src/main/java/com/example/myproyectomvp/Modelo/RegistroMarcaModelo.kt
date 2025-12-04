@@ -55,6 +55,26 @@ class RegistroMarcaModelo(private val api: ApiService) : MarcasContrac.Model {
             }
         })
     }
+    override fun eliminarMarca(id: Int, callback: (Boolean, String) -> Unit) {
+        api.eliminarMarca(id).enqueue(object : Callback<DefaultResponse> {
+            override fun onResponse(
+                call: Call<DefaultResponse>,
+                response: Response<DefaultResponse>
+            ) {
+                val body = response.body()
+                if (response.isSuccessful && body?.success == true) {
+                    callback(true, body.message)
+                } else {
+                    callback(false, body?.message ?: "Error al eliminar")
+                }
+            }
+
+            override fun onFailure(call: Call<DefaultResponse>, t: Throwable) {
+                callback(false, t.message ?: "Error de conexión")
+            }
+        })
+    }
+
 
 
 }
